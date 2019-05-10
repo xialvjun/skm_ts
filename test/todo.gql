@@ -1,0 +1,21 @@
+type Todo {
+  _id: ID!
+  content: String!
+  complated: Boolean!
+  author_id: ID!
+  author: User!
+}
+
+extend type User {
+  todos(name_like: String): [Todo!]!
+}
+
+extend type Query {
+  todo(_id: ID!): Todo!
+  todos(content_like: String, author_id: ID, complated: Boolean): [Todo!]!
+}
+
+extend type Mutation {
+  add_todo(content: String!): Todo!
+  complete_todo(_id: ID!): Todo!
+}

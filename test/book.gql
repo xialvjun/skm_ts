@@ -1,0 +1,28 @@
+enum Publisher {
+  CHINA_XXX
+  USA_XXXXX
+}
+
+type Book {
+  _id: ID!
+  name: String!
+  publisher: Publisher!
+  published_at: Date!
+  content: Json
+  author_id: ID!
+  author: User!
+}
+
+extend type User {
+  books(name_like: String, publisher: Publisher, published_after: Date, published_before: Date): [Book!]!
+}
+
+extend type Query {
+  book(_id: ID!): Book!
+  books(name_like: String, author_id: ID, publisher: Publisher, published_after: Date, published_before: Date): [Book!]!
+}
+
+extend type Mutation {
+  add_book(name: String!, publisher: Publisher!, published_at: Date!, content: Json): Book!
+  del_book(_id: ID!): Boolean!
+}
