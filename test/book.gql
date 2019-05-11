@@ -3,6 +3,10 @@ enum Publisher {
   USA_XXXXX
 }
 
+extend enum Publisher {
+  ENG_XXX
+}
+
 type Book {
   _id: ID!
   name: String!

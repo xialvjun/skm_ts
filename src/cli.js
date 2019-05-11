@@ -3,8 +3,9 @@ const path = require('path');
 const fs = require('fs');
 
 const meow = require('meow');
+const lodash = require('lodash');
 
-const { transform } = require('./transform');
+const { parse, stringify } = require('./transform');
 const { SCALAR } = require('./scalar');
 
 const cli = meow(
@@ -47,9 +48,11 @@ cli.flags.scalar = []
     SCALAR[k] = v;
   });
 
-function run(source_file_paths) {
-  source_file_paths = source_file_paths.map(file_path => path.relative(process.cwd(), file_path));
-  let ts_source = source_file_paths.map(path => `// ${path}\n${transform(fs.readFileSync(path, 'utf8'))}`).join('\n\n\n');
+function run(file_paths) {
+  file_paths = file_paths.map(file_path => path.relative(process.cwd(), file_path));
+  let infos = file_paths.map(file_path => parse(fs.readFileSync(file_path, 'utf8')));
+  let info = lodash.merge({}, ...infos);
+  let ts_source = stringify(info);
   if (cli.flags.output) {
     fs.writeFileSync(cli.flags.output, ts_source, { encoding: 'utf8' });
   } else {

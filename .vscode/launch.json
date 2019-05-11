@@ -9,7 +9,7 @@
       "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/src/cli.js",
-      "args": ["test/*.gql", "-s", "Json:object", "-o", "test/test.ts"]
+      "args": ["test/book.gql", "-s", "Json:object", "-o", "test/test.ts"]
     }
   ]
 }

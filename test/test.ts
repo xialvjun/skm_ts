@@ -1,106 +1,84 @@
-// test/book.gql
 
 export enum Publisher {
-  CHINA_XXX,
-  USA_XXXXX,
-}
-
-export namespace User {
-  export interface books {
-    name_like: string | null;
-    publisher: Publisher | null;
-    published_after: Date | null;
-    published_before: Date | null;
-  }
-}
-
-export namespace Query {
-  export interface book {
-    _id: string;
-  }
-}
-
-export namespace Query {
-  export interface books {
-    name_like: string | null;
-    author_id: string | null;
-    publisher: Publisher | null;
-    published_after: Date | null;
-    published_before: Date | null;
-  }
+  CHINA_XXX="CHINA_XXX",
+  ENG_XXX="ENG_XXX",
+  USA_XXXXX="USA_XXXXX",
 }
 
 export namespace Mutation {
+
   export interface add_book {
-    name: string;
-    publisher: Publisher;
-    published_at: Date;
     content: object | null;
+    name: string;
+    published_at: Date;
+    publisher: Publisher;
   }
-}
-
-export namespace Mutation {
-  export interface del_book {
-    _id: string;
-  }
-}
-
-
-
-// test/common.gql
-
-export namespace Query {
-  export interface user {
-    _id: string;
-  }
-}
-
-export namespace Mutation {
-  export interface sign_up {
-    username: string;
-    password: string;
-  }
-}
-
-export namespace Mutation {
-  export interface sign_in {
-    username: string;
-    password: string;
-  }
-}
-
-
-
-// test/todo.gql
-
-export namespace User {
-  export interface todos {
-    name_like: string | null;
-  }
-}
-
-export namespace Query {
-  export interface todo {
-    _id: string;
-  }
-}
-
-export namespace Query {
-  export interface todos {
-    content_like: string | null;
-    author_id: string | null;
-    complated: boolean | null;
-  }
-}
-
-export namespace Mutation {
+  
   export interface add_todo {
     content: string;
   }
-}
-
-export namespace Mutation {
+  
   export interface complete_todo {
     _id: string;
   }
+  
+  export interface del_book {
+    _id: string;
+  }
+  
+  export interface sign_in {
+    password: string;
+    username: string;
+  }
+  
+  export interface sign_up {
+    password: string;
+    username: string;
+  }
+  
+}
+
+export namespace Query {
+
+  export interface book {
+    _id: string;
+  }
+  
+  export interface books {
+    author_id: string | null;
+    name_like: string | null;
+    published_after: Date | null;
+    published_before: Date | null;
+    publisher: Publisher | null;
+  }
+  
+  export interface todo {
+    _id: string;
+  }
+  
+  export interface todos {
+    author_id: string | null;
+    complated: boolean | null;
+    content_like: string | null;
+  }
+  
+  export interface user {
+    _id: string;
+  }
+  
+}
+
+export namespace User {
+
+  export interface books {
+    name_like: string | null;
+    published_after: Date | null;
+    published_before: Date | null;
+    publisher: Publisher | null;
+  }
+  
+  export interface todos {
+    name_like: string | null;
+  }
+  
 }
