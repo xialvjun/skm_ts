@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "description": "Generate typescript types from your graphql schema gql files.",
   "bin": "src/cli.js",
-  "main": "src/cli.js",
+  "keywords": ["graphql", "gql", "typescript", "ts"],
   "scripts": {
     "test": "node src/cli.js test/*.gql -s Json:object -o test/test.ts"
   },
