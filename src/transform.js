@@ -37,13 +37,27 @@ exports.parse = source => {
     [graphql.Kind.INPUT_OBJECT_TYPE_DEFINITION]: node => {
       let patch = new_namespace();
       let inter = (patch.interfaces[node.name.value] = {});
-      node.fields.map(it => (inter[it.name.value] = real_get_type(it.type)));
+      node.fields.map(it => {
+        let real_type = real_get_type(it.type);
+        if (real_type.endsWith(' | null')) {
+          inter[it.name.value+'?'] = real_type.slice(0, -7);
+        } else {
+          inter[it.name.value] = real_get_type(it.type);
+        }
+      });
       lodash.merge(namespace, patch);
     },
     [graphql.Kind.INPUT_OBJECT_TYPE_EXTENSION]: node => {
       let patch = new_namespace();
       let inter = (patch.interfaces[node.name.value] = {});
-      node.fields.map(it => (inter[it.name.value] = real_get_type(it.type)));
+      node.fields.map(it => {
+        let real_type = real_get_type(it.type);
+        if (real_type.endsWith(' | null')) {
+          inter[it.name.value+'?'] = real_type.slice(0, -7);
+        } else {
+          inter[it.name.value] = real_get_type(it.type);
+        }
+      });
       lodash.merge(namespace, patch);
     },
 
@@ -58,7 +72,14 @@ exports.parse = source => {
         let patch = new_namespace();
         let names = (patch.namespaces[current_object_type_name] = new_namespace());
         let inter = (names.interfaces[node.name.value] = {});
-        node.arguments.map(it => (inter[it.name.value] = real_get_type(it.type)));
+        node.arguments.map(it => {
+          let real_type = real_get_type(it.type);
+          if (real_type.endsWith(' | null')) {
+            inter[it.name.value+'?'] = real_type.slice(0, -7);
+          } else {
+            inter[it.name.value] = real_get_type(it.type);
+          }
+        });
         lodash.merge(namespace, patch);
       }
     },
