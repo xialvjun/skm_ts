@@ -38,6 +38,15 @@ exports.parse = source => {
       let patch = new_namespace();
       let inter = (patch.interfaces[node.name.value] = {});
       node.fields.map(it => {
+        // ? 下面三处 inter[it.name.value+'?'] = real_type.slice(0, -7); 到底是否合适.
+        // ? 因为 var a: {a?:number} = {} as {a:number|null} 是可以的, 但 var a: {a:number|null} = {} as {a?:number} 却不行
+        // ? 同时, skm_ts 生成的 type 主要设置 resolver args 类型, args 又主要用于等号右侧...
+        // x? 所以 server 这边的 input type 和 args type 应该用 {a:number|null}
+        // x? 而 client 那边的 variables type 应该用 {a?:number}, output type 用 {a:number|null}
+        // ? 其实就算 args 主要用于等号右侧, 它跟数据库类型也不是直接交互...可能还是 {a?:number} 好
+        // ? 另外, apollo-server 会过滤 variables 中不存在的字段, 但不会补充 variables 中应该存在的字段为 null... 即对于 hello(name: String): String!
+        // ? query({variables:{name:'xialvjun', wrong_field: 'asfasf'}}), resolver args 会是 {name:'xialvjun'} 而
+        // ? query({variables:{}}), resolver args 会是 {}, 不会自作主张设置 args.name===null, 除非 query({variables:{name:null}})
         let real_type = real_get_type(it.type);
         if (real_type.endsWith(' | null')) {
           inter[it.name.value+'?'] = real_type.slice(0, -7);
