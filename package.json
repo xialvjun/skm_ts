@@ -1,6 +1,6 @@
 {
   "name": "skm_ts",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "description": "Generate typescript types from your graphql schema gql files.",
   "bin": "src/cli.js",
   "keywords": ["graphql", "gql", "typescript", "ts"],
