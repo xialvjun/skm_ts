@@ -1,3 +1,6 @@
+# DEPRECATED
+USE https://github.com/dotansimha/graphql-code-generator or https://github.com/prisma/graphqlgen INSTEAD.
+
 # skm_ts
 Generate typescript types from your graphql schema gql files.
 
